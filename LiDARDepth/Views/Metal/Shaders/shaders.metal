@@ -141,7 +141,8 @@ fragment half4 planeFragmentShaderColorZap(ColorInOut in [[stage_in]],
 }
 
 
-// Shade a texture with confidence levels low, medium, and high to red, green, and blue, respectively.
+// Shade a texture with confidence levels low, medium, and high to red, green,
+// and blue, respectively.
 fragment half4 planeFragmentShaderConfidence(ColorInOut in [[stage_in]], texture2d<float, access::sample> textureIn [[ texture(0) ]])
 {
     constexpr sampler colorSampler(address::clamp_to_edge, filter::nearest);
@@ -193,7 +194,7 @@ vertex ParticleVertexInOut pointCloudVertexShader(
     
     // The x-position is the remainder of the y-value division.
     pos.x = vertexID % depthTexture.get_width();
-    //get depth in [mm]
+    // Get depth in mm.
     float depth = (depthTexture.read(pos).x) * 1000.0f;
     
     
@@ -256,9 +257,9 @@ vertex ParticleVertexInOut pointCloudEffectVertexShader(
     float yrw = ((int)pos.y - cameraIntrinsics[2][1]) * depth / cameraIntrinsics[1][1];
     float3 xyz = { xrw, yrw, depth};
     
-    // vertexID to linear random line
+    // vertexID to linear random line.
     float3 d = normalize(float3(sin(vertexID/2.),cos(vertexID/2.),sin(vertexID/2.)));
-    //sin iTime
+    // sin iTime.
     float s = sin(iTime/100.0f);
     if(s <= 0)
     {
@@ -326,5 +327,4 @@ kernel void convertYCbCrToRGBA(texture2d<float, access::read> colorYtexture [[te
     // Return the converted RGB color.
     float4 colorSample = ycbcrToRGBTransform * ycbcr;
     colorRGBTexture.write(colorSample, uint2(gid.xy));
-    
 }

@@ -2,7 +2,7 @@
 See LICENSE folder for this sample’s licensing information.
 
 Abstract:
-Extensions on View to help with drawing the camera streams correctly on all device orientations.
+View extensions to help with drawing the camera streams correctly on all device orientations.
 */
 
 import SwiftUI

@@ -2,7 +2,7 @@
 See LICENSE folder for this sample’s licensing information.
 
 Abstract:
-A singleton object that holds the MTLDevice and MTLCommandQueue for the app.
+A singleton object that holds the Metal device and command queue for the app.
 */
 
 import Foundation
@@ -31,4 +31,3 @@ class MetalEnvironment {
         self.metalLibrary = metalLibrary
     }
 }
-

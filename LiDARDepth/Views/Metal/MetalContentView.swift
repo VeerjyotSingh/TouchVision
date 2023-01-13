@@ -12,7 +12,7 @@ import Metal
 /**
 The `MetalRepresentable` protocol extends `UIViewRepresentable` to allow `MTKView` objects in SwiftUI.
 The `rotationAngle` presents the camera streams upright on device rotations.
-Each new metal view that conforms to `MetalRepresentable` is required to add its needed input properties,
+Each new Metal view that conforms to `MetalRepresentable` needs to add its required input properties,
 and to implement the `makeCoordinator` function to return the coordinator that holds the view's drawing logic.
 */
 protocol MetalRepresentable: UIViewRepresentable {
@@ -38,9 +38,9 @@ extension MetalRepresentable where Self.Coordinator: MTKCoordinator<Self> {
 }
 
 /**
- The base coordinator class that conforms to `MTKViewDelegate`. Subclasses should override:
+ The base coordinator class that conforms to `MTKViewDelegate`. Subclasses can override:
  - `preparePipelineAndDepthState()` - to create a pipeline descriptor with the required vertex and fragment
-                                      function to create a `pipelineState` and `depthState` if needed.
+                                      function to create a `pipelineState` and `depthState` if necessary.
 - `draw()` - to perform the drawing operation.
  */
 class MTKCoordinator<MTKViewRepresentable: MetalRepresentable>: NSObject, MTKViewDelegate {
@@ -74,7 +74,7 @@ class MTKCoordinator<MTKViewRepresentable: MetalRepresentable>: NSObject, MTKVie
         preparePipelineAndDepthState()
     }
     
-    /// The app uses a quad to draw a texture onscreen. It creates a `MTLVertexDescriptor` for this case.
+    /// The app uses a quad to draw a texture onscreen. It creates an `MTLVertexDescriptor` for this case.
     func createPlaneMetalVertexDescriptor() -> MTLVertexDescriptor {
         let mtlVertexDescriptor: MTLVertexDescriptor = MTLVertexDescriptor()
         // Store position in `attribute[[0]]`.

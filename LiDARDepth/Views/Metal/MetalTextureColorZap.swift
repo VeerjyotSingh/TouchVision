@@ -2,8 +2,8 @@
 See LICENSE folder for this sample’s licensing information.
 
 Abstract:
-A view that draws a jet colored depth overlay on the color image
- between maxDepth and minDepth with a wave effect that moves along the Z axis.
+A view that draws a jet-colored depth overlay on the color image
+ between maximum and minimum depth with a wave effect that moves along the z-axis.
 */
 
 import SwiftUI
@@ -55,7 +55,7 @@ final class MTKColorZapCoordinator: MTKCoordinator<MetalTextureColorZapView> {
         guard let commandBuffer = metalCommandQueue.makeCommandBuffer() else { return }
         guard let passDescriptor = view.currentRenderPassDescriptor else { return }
         guard let encoder = commandBuffer.makeRenderCommandEncoder(descriptor: passDescriptor) else { return }
-        // Vertex and Texture coordinates data (x,y,u,v) * 4 ordered for triangle strip
+        // Vertex and Texture coordinates data (x,y,u,v) * 4 ordered for triangle strip.
         let vertexData: [Float] = [-1, -1, 1, 1,
                                     1, -1, 1, 0,
                                    -1,  1, 0, 1,

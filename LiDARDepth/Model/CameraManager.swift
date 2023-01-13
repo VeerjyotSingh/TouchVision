@@ -2,7 +2,7 @@
 See LICENSE folder for this sample’s licensing information.
 
 Abstract:
-An object that connects the CameraController and the views.
+An object that connects the camera controller and the views.
 */
 
 import Foundation

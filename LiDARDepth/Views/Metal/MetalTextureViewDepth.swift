@@ -52,7 +52,7 @@ final class MTKDepthTextureCoordinator: MTKCoordinator<MetalTextureDepthView> {
         guard let commandBuffer = metalCommandQueue.makeCommandBuffer() else { return }
         guard let passDescriptor = view.currentRenderPassDescriptor else { return }
         guard let encoder = commandBuffer.makeRenderCommandEncoder(descriptor: passDescriptor) else { return }
-        // Vertex and Texture coordinates data (x,y,u,v) * 4 ordered for triangle strip
+        // Vertex and Texture coordinates data (x,y,u,v) * 4 ordered for triangle strip.
         let vertexData: [Float] = [  -1, -1, 1, 1,
                                      1, -1, 1, 0,
                                      -1, 1, 0, 1,
@@ -68,6 +68,4 @@ final class MTKDepthTextureCoordinator: MTKCoordinator<MetalTextureDepthView> {
         commandBuffer.present(view.currentDrawable!)
         commandBuffer.commit()
     }
-
 }
-

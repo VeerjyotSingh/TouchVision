@@ -1,19 +1,19 @@
-# Capturing Depth Using the LiDAR Camera
+# Capturing depth using the LiDAR camera
 Access the LiDAR camera on supporting devices to capture precise depth data.
 
 ## Overview
-AVFoundation introduced depth data capture for photos and video in iOS 11. The data it provides is suitable for many apps, but may not meet the needs of those that require greater precision depth. Starting in iOS 15.4, you can access the LiDAR camera on supporting hardware, which offers high-precision depth data suitable for use cases like room scanning and measurement.
+AVFoundation introduced depth data capture for photos and video in iOS 11. The data it provides is suitable for many apps, but may not meet the needs of those that require greater precision depth. Starting in iOS 15.4, you can access the LiDAR camera on supported hardware, which offers high-precision depth data suitable for use cases like room scanning and measurement.
 
-The sample app shows how to capture and render depth data from the LiDAR camera. It starts in streaming mode, which demonstrates how to capture synchronized video and depth data. Tapping the camera button in the upper-left corner of the screen toggles the app into photo mode, which illustrates how to capture photos with depth data. In both modes, the app provides several Metal-based visualizations of the depth and image data.
+This sample code project shows how to capture and render depth data from the LiDAR camera. It starts in streaming mode, which demonstrates how to capture synchronized video and depth data. When you tap the Camera button in the upper-left corner of the screen, the app switches to photo mode, which illustrates how to capture photos with depth data. In both modes, the app provides several Metal-based visualizations of the depth and image data.
 
-## Configure the Sample Code Project
-You must run this sample code on a device that provides a LiDAR camera such as:
-- iPhone 12 Pro or later.
-- iPad Pro 11-inch (2nd generation) or later.
-- iPad Pro 12.9-inch (4th generation) or later.
+## Configure the sample code project
+Run this sample code on a device that provides a LiDAR camera, such as:
+- iPhone 12 Pro or later
+- iPad Pro 11-inch (3rd generation) or later
+- iPad Pro 12.9-inch (5th generation) or later
 
-## Configure the LiDAR Camera
-The sample app’s `CameraController` class provides the code that configures and manages the capture session, and handles the delivery of new video and depth data. It begins its configuration by retrieving the LiDAR camera. It calls the capture device’s [default(\_:for:position:)][1] class method as shown below, passing it the new [.builtInLiDARDepthCamera][2] device type available in iOS 15.4 and later.
+## Configure the LiDAR camera
+The sample app’s `CameraController` class provides the code that configures and manages the capture session, and handles the delivery of new video and depth data. It begins its configuration by retrieving the LiDAR camera. It calls the capture device’s [default(\_:for:position:)][1] class method, passing it the new [.builtInLiDARDepthCamera][2] device type available in iOS 15.4 and later.
 
 ``` swift
 // Look up the LiDAR camera.
@@ -22,7 +22,7 @@ guard let device = AVCaptureDevice.default(.builtInLiDARDepthCamera, for: .video
 }
 ```
 
-After retrieving the device, the app configures it with a specific video and depth format. It asks the device for its supported formats and finds the best nonbinned, full-range YUV color format that matches the sample app's preferred width and supports depth capture. Finally, it sets the active formats on the device as shown below.
+After retrieving the device, the app configures it with a specific video and depth format. It asks the device for its supported formats and finds the best nonbinned, full-range YUV color format that matches the sample app's preferred width and supports depth capture. Finally, it sets the active formats on the device as in the following code example:
 
 ``` swift
 // Find a match that outputs video data in the format the app's custom Metal views require.
@@ -53,9 +53,8 @@ device.activeDepthDataFormat = depthFormat
 device.unlockForConfiguration()
 ```
 
-
-## Configure the Capture Outputs
-The app operates in streaming or photo mode. To enable streaming output, it creates an instance of [AVCaptureVideoDataOutput][3] and [AVCaptureDepthDataOutput][4] to capture video sample buffers and depth data, respectively. It configures them as shown in the following example.
+## Configure the capture outputs
+The app operates in streaming or photo mode. To enable streaming output, it creates an instance of [AVCaptureVideoDataOutput][3] and [AVCaptureDepthDataOutput][4] to capture video sample buffers and depth data, respectively. It configures them as follows:
 
 ``` swift
 // Create an object to output video sample buffers.
@@ -74,7 +73,7 @@ outputVideoSync.setDelegate(self, queue: videoQueue)
 
 Because the video and depth data stream from separate output objects, the sample uses an [AVCaptureDataOutputSynchronizer][5] to synchronize the delivery from both outputs to a single callback. The `CameraController` class adopts the synchronizer’s [AVCaptureDataOutputSynchronizerDelegate][6] protocol and responds to the delivery of new video and depth data.
 
-To handle photo capture, the app also creates an instance of [AVCapturePhotoOutput][7]. It optimizes the output for high-quality capture and adds the output to the capture session as shown below.
+To handle photo capture, the app also creates an instance of [AVCapturePhotoOutput][7]. It optimizes the output for high-quality capture and adds the output to the capture session.
 
 ``` swift
 // Create an object to output photos.
@@ -86,10 +85,10 @@ captureSession.addOutput(photoOutput)
 photoOutput.isDepthDataDeliveryEnabled = true
 ```
 
-After it adds the output to the session, it enables the delivery of depth data, which configures the capture pipeline appropriately. It can only enable depth delivery after adding the output to the capture session because the output needs to know whether the pipeline is configured to deliver it.
+After it adds the output to the session, it enables the delivery of depth data, which configures the capture pipeline appropriately. It can only enable depth delivery after adding the output to the capture session because the output needs to determine whether the pipeline configuration can deliver it.
 
-## Capture Synchronized Video and Depth
-With the capture session’s inputs and outputs configured as required, the app is ready to start capturing data. The app starts in streaming mode, which uses the video data and depth data outputs and an  `AVCaptureDataOutputSynchronizer` to synchronize the delivery of their data. The app adopts the synchronizer’s delegate protocol and implements its [dataOutputSynchronizer(\_:didOutput:)][8] method to handle the delivery as shown below.
+## Capture synchronized video and depth
+After configuring the capture session’s inputs and outputs as required, the app is ready to start capturing data. The app starts in streaming mode, which uses the video data and depth data outputs and an `AVCaptureDataOutputSynchronizer` to synchronize the delivery of their data. The app adopts the synchronizer’s delegate protocol and implements its [dataOutputSynchronizer(\_:didOutput:)][8] method to handle the delivery, as the following example shows:
 
 ``` swift
 func dataOutputSynchronizer(_ synchronizer: AVCaptureDataOutputSynchronizer,
@@ -114,8 +113,8 @@ func dataOutputSynchronizer(_ synchronizer: AVCaptureDataOutputSynchronizer,
 
 The app retrieves the container objects that store the synchronized data from the [AVCaptureSynchronizedDataCollection][9]. It then unwraps the underlying video pixel buffer and depth data, and packages them for the app's Metal views to display.
 
-## Capture Photos and Depth
-Tapping the app’s camera button in the upper-left corner of the user interface toggles the app to photo capture mode. When this occurs, the app calls its `capturePhoto()` method, which creates a photo settings object, requests depth delivery on it, and initiates a photo capture as shown below.
+## Capture photos and depth
+When you tap the app’s Camera button in the upper-left corner of the user interface, the app switches to photo mode. When this occurs, the app calls its `capturePhoto()` method, which creates a photo settings object, requests depth delivery on it, and initiates a photo capture.
 
 ``` swift
 func capturePhoto() {
@@ -160,7 +159,6 @@ func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo:
     delegate?.onNewPhotoData(capturedData: data)
 }
 ```
-
 
 [1]:	https://developer.apple.com/documentation/avfoundation/avcapturedevice/2361508-default
 [2]:	https://developer.apple.com/documentation/avfoundation/avcapturedevice/devicetype/3915812-builtinlidardepthcamera

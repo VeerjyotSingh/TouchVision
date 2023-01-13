@@ -2,7 +2,7 @@
 See LICENSE folder for this sample’s licensing information.
 
 Abstract:
-A view that draws colorY and colorCbCr textures.
+A view that draws color textures.
 */
 
 import SwiftUI
@@ -53,7 +53,7 @@ final class MTKColorThresholdDepthTextureCoordinator: MTKCoordinator<MetalTextur
         guard let commandBuffer = metalCommandQueue.makeCommandBuffer() else { return }
         guard let passDescriptor = view.currentRenderPassDescriptor else { return }
         guard let encoder = commandBuffer.makeRenderCommandEncoder(descriptor: passDescriptor) else { return }
-        // Vertex and Texture coordinates data (x,y,u,v) * 4 ordered for triangle strip
+        // Vertex and Texture coordinates data (x,y,u,v) * 4 ordered for triangle strip.
         let vertexData: [Float] = [-1, -1, 1, 1,
                                     1, -1, 1, 0,
                                    -1,  1, 0, 1,
@@ -71,5 +71,4 @@ final class MTKColorThresholdDepthTextureCoordinator: MTKCoordinator<MetalTextur
         commandBuffer.present(view.currentDrawable!)
         commandBuffer.commit()
     }
-
 }

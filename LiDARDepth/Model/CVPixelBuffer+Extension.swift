@@ -2,7 +2,7 @@
 See LICENSE folder for this sample’s licensing information.
 
 Abstract:
-An extension to wrap a pixel buffer in an MTLTexture object.
+An extension to wrap a pixel buffer in a Metal texture object.
 */
 
 import Foundation

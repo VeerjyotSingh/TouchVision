@@ -2,7 +2,7 @@
 See LICENSE folder for this sample’s licensing information.
 
 Abstract:
-A view that presents a rotating color point cloud with MTKPointCloudCoordinator.
+A view that presents a rotating color point cloud with the point cloud coordinator.
 */
 
 import Foundation
@@ -75,7 +75,7 @@ final class MTKPointCloudCoordinator: MTKCoordinator<MetalPointCloudView> {
                                                                           nearZ: 10.0, farZ: 8000.0)
         
         var orientationOrig: simd_float4x4 = simd_float4x4()
-        // Since the camera stream is rotated clockwise, rotate it back.
+        // Because the camera stream is rotated clockwise, rotate it back.
         orientationOrig.columns.0 = [0, -1, 0, 0]
         orientationOrig.columns.1 = [-1, 0, 0, 0]
         orientationOrig.columns.2 = [0, 0, 1, 0]
@@ -90,8 +90,8 @@ final class MTKPointCloudCoordinator: MTKCoordinator<MetalPointCloudView> {
         staticAngle += staticInc
 
         if currentCameraMode == .quarterArc {
-            // Limit camera rotation to a quarter arc, to and fro, while aimed
-            // at the center.
+            // Limit camera rotation to a quarter arc, to and fro, while it's
+            // aiming at the center.
             if staticAngle <= 0 {
                  staticInc = -staticInc
              }
@@ -162,7 +162,7 @@ final class MTKPointCloudCoordinator: MTKCoordinator<MetalPointCloudView> {
     }
 }
 
-/// A helper function that calculates the projection matrix given fovY in radians, aspect ration and nearZ and farZ planes.
+/// A helper function that calculates the projection matrix given fovY in radians, the aspect ratio, and the nearZ and farZ planes.
 func makePerspectiveMatrixProjection(fovyRadians: Float, aspect: Float, nearZ: Float, farZ: Float) -> simd_float4x4 {
     let yProj: Float = 1.0 / tanf(fovyRadians * 0.5)
     let xProj: Float = yProj / aspect

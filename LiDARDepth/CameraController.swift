@@ -70,7 +70,7 @@ class CameraController: NSObject, ObservableObject {
         try setupCaptureInput()
         setupCaptureOutputs()
         
-        // Finalize capture session configuration.
+        // Finalize the capture session configuration.
         captureSession.commitConfiguration()
     }
     
