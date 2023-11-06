@@ -4,7 +4,16 @@
 <dict>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Please allow access to save photo in your photo library</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>You can select photos to attach to reports.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>This app will use camera.</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+    <key>NSBluetoothAlwaysUsageDescription</key>
+    <string>This app uses Bluetooth to communicate with devices using the characteristic with UUID F3737FEA-D4C3-5131-A518-AFD42CA05DB8.</string>
+
 </dict>
 </plist>
